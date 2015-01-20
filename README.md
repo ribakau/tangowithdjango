@@ -1,2 +1,2 @@
 # tangowithdjango
-Repository for 'Tango with django" tutorials.
+Repository for 'Tango With Django" tutorials.
