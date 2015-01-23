@@ -1,5 +1,4 @@
 README.md
-manage.py
-*.pyc
 db.sqlite3
+*.pyc
 /.idea
