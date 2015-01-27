@@ -18,7 +18,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                There are no categories to present.<br/>
+                <strong>There are no categories to present.</strong><br/>
             {% endif %}
             
             <a href="/rango/add_category/">Add a New Category</a>
