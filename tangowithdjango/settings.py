@@ -64,6 +64,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+PASSWORD_HASHERS = (
+'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
 ROOT_URLCONF = 'tangowithdjango.urls'
 
 WSGI_APPLICATION = 'tangowithdjango.wsgi.application'
@@ -96,5 +101,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+
+LOGIN_URL = '/rango/login/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+

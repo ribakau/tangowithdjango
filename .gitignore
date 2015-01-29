@@ -2,3 +2,5 @@ README.md
 db.sqlite3
 *.pyc
 /.idea
+*.py~
+*.html~

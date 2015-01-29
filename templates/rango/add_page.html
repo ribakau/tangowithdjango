@@ -23,10 +23,11 @@
                 
                 <input type="submit" name="submit" value="Create a new Page." /><br/>
             </form>
+            <a href="/rango/category/{{ name_slug }}">Back</a>
         {% else %}
-            A category <i>{{ name_slug}}</i> does not exist.<br/>
+            Category <i>{{ name_slug}}</i> does not exist.<br/>
             <a href="/rango/add_category">Create a new category</a><br/>
+            <a href="/rango">Index</a>
         {% endif %}
-        <a href="/rango/category/{{ name_slug }}">Back</a>
     </body>
 </html>

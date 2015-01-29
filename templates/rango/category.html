@@ -17,7 +17,12 @@
                 No pages currently in this category.
             {% endif %}<br/>
             
-            <a href="/rango/category/{{ name_slug }}/add_page/">Add a new page</a><br/>
+            {% if user.is_authenticated %}
+                <a href="/rango/category/{{ name_slug }}/add_page">Add a new page</a><br/>
+            {% else %}
+                <a href="/rango/login">Login to add new pages</a><br/>
+            {% endif %}
+
         {% else %}
             The specified category <i>{{ name_slug }}</i> does not exist!<br/>
         {% endif %}
