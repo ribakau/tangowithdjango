@@ -1,17 +1,10 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
 {% load staticfiles %}
 
-<html>
+{% block title %}About{% endblock %}
 
-    <head>
-        <title>About</title>
-    </head>
-
-    <body>
-        Created by Mindaugas Ribakauskas, <strong>2093693</strong><br/>
+{% block body_block %}
+        <p>This tutorial has been put up by Mindaugas Ribakauskas, <strong>2093693</strong></p>
         <img src="{% static "images/llama.jpg" %}" alt="Picture of me" /><br/>
-        <a href="/rango">Index</a><br/>
-    </body>
-
-</html>
+{% endblock %}

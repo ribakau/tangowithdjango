@@ -23,7 +23,7 @@ def category(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
         context_dict['category_name'] = category.name
-        context_dict['name_slug'] = category_name_slug
+        context_dict['name_slug'] = category.slug
 
         pages = Page.objects.filter(category=category)
         
@@ -74,9 +74,8 @@ def add_page(request, category_name_slug):
     else:
         form = PageForm()
     
-    context_dict = {'form':form, 'category': cat, 'name_slug': category_name_slug}
-    
-    return render(request, 'rango/add_page.html', context_dict)
+    return render(request, 'rango/add_page.html', {'form':form, 'category': cat, 'name_slug': category_name_slug})
+
 
 def register(request):
 
@@ -150,12 +149,10 @@ def user_login(request):
 
 @login_required
 def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+    return render(request, 'rango/restricted.html', {})
 
 
 @login_required
 def user_logout(request):
     logout(request) 
     return HttpResponseRedirect('/rango/')
-
-
