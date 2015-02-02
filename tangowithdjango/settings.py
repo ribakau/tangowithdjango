@@ -42,6 +42,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# User authentication info
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/rango/'
+LOGIN_URL = '/accounts/login/'
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -51,7 +58,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rango'
+    'rango',
+    'registration'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,8 +110,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 
-LOGIN_URL = '/rango/login/'
+LOGIN_URL = '/accounts/login/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
-
