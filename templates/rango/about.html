@@ -5,7 +5,12 @@
 {% block title %}About{% endblock %}
 
 {% block body_block %}
-        <p>This tutorial has been put up by Mindaugas Ribakauskas, <strong>2093693</strong></p>
-        <img src="{% static "images/llama.jpg" %}" alt="Picture of me" /><br/>
-        <p>Visits: <strogn>{{ visits }}</strong></p>
+    <div class="page-header">
+        <h2>About</h2>
+    </div>
+    <div>
+        <p>You have visited this site <strong>{{ visits }}</strong> time(s).</p>
+        <p>This tutorial has been created by Mindaugas Ribakauskas, <strong>2093693</strong></p>
+        <img  width="240" src="{% static "images/llama.jpg" %}" alt="Picture of Rango" />
+    </div>
 {% endblock %}

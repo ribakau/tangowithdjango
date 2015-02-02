@@ -3,21 +3,19 @@
 {% block title %}Add a New Category{% endblock %}
 
 {% block body_block %}
-        <h1>Add a Category</h1>
+    <form id="category_form" method="post" action="{% url 'add_category' %}">
+        <h2 class="form-signing-heading">Add a new Category</h2>
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
 
-        <form id="category_form" method="post" action="{% url 'add_category' %}">
+        {% for field in form.visible_fields %}
+            <p>{{ field.errors }}
+            {{ field.help_text }}<br/>
+            {{ field }}<p/>
+        {% endfor %}
 
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}<br/>
-
-            <input type="submit" name="submit" value="Create Category" />
-        </form>
+        <button class="btn btn-primary" type="submit" name="submit">Add a Category</button>
+    </form>
 {% endblock %}

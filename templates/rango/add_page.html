@@ -4,24 +4,22 @@
 
 {% block body_block %}
     {% if category %}
-        <h1>Add a New Page</h1>
-
-        <form id="page_form" method="post" action="{% url 'add_page' category.slug %}">
-
+        {% csrf_token %}
+        <form role="form" id="page_form" method="post" action="{% url 'add_page' category.slug %}">
+            <h2 class="form-signing-heading">Add a new Page to {{ category.name }}</h2>
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
 
             {% for field in form.visible_fields %}
-                {{ field.help_text }}
+                <p>{{ field.help_text }}<br/>
                 {{ field }}<br/>
-                {{ field.errors }}
-            {% endfor %}<br/>
+                {{ field.errors }}</p>
+            {% endfor %}
             
-            <input type="submit" name="submit" value="Create a new Page." /><br/>
+            <button class="btn btn-primary" type="submit" name="submit">Add a Page</button>
         </form>
-        <a href="{% url 'category' category.slug %}">Back</a>
     {% else %}
         Category <strong>{{ name_slug }}</strong> does not exist.<br/>
     {% endif %}
