@@ -5,6 +5,7 @@ from rango.forms import CategoryForm, PageForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from rango.bing_search import run_query
 
 def index(request):
 
@@ -117,3 +118,21 @@ def add_page(request, category_name_slug):
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
+
+
+def search(request):
+
+    result_list = []
+    context_dict = {}
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
+            context_dict['query'] = query
+            
+
+    return render(request, 'rango/search.html', context_dict)
+
