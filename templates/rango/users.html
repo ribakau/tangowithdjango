@@ -1,0 +1,15 @@
+{% extends 'rango/base.html' %}
+
+{% block title %} Users of the website {% endblock %}
+
+{% block body_block %}
+{% if users %}
+    <h2 class="form-signing-heading">Registered users</h2>
+    <hr>
+    {% for user in users %}
+        <b><a href="/rango/user/{{user.username}}">{{user.username}}</a></b><br/>
+    {% endfor %}
+{% else %}
+    Website has no users.
+{% endif %}
+{% endblock %}

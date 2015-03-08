@@ -1,0 +1,26 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}{% if user_account %}{{ user_account.username }}'s profile{% else %} User not found {% endif %}{% endblock %}
+
+{% block body_block %}
+
+{% if user_account %}
+    <h2 class="form-signing-heading">
+    {{user_account.username}}'s profile
+    {% if logged_in %}
+    <a class="btn btn-primary" href='/rango/edit_profile' role="button">Edit</a><br/>
+    {% endif %}
+    </h2>
+    <hr>
+    <b>Email:</b> {{user_account.email}}<br/>
+    {% if website %}
+        <b>Website:</b> {{website}}<br/>
+    {% endif %}
+    {% if picture %}
+        <b>Picture:</b><br/>
+        <img src="/media/{{picture}}" width="250px" alt="{{user_account.username}}'s picture"/>
+    {% endif %}
+{% else %}
+<h3>User not found</h3>
+{% endif %}
+{% endblock %}

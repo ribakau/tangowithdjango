@@ -5,7 +5,7 @@ from registration.backends.simple.urls import RegistrationView
 
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, request, user):
-        return '/rango/'
+        return '/rango/edit_profile'
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),

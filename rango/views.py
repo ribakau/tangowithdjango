@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from rango.models import Category, Page
-from rango.forms import CategoryForm, PageForm
+from rango.models import Category, Page, UserProfile
+from rango.forms import CategoryForm, PageForm, UserProfileForm
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -57,6 +58,7 @@ def about(request):
 def category(request, category_name_slug):
 
     context_dict = {}
+    result_list = []
 
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -69,6 +71,14 @@ def category(request, category_name_slug):
         context_dict['category'] = category
     except Category.DoesNotExist:
         return HttpResponseRedirect('/rango/add_category/')
+    
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
+            context_dict['query'] = query
 
     return render(request, 'rango/category.html', context_dict)
 
@@ -120,19 +130,82 @@ def restricted(request):
     return render(request, 'rango/restricted.html', {})
 
 
-def search(request):
-
-    result_list = []
-    context_dict = {}
-
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-
-        if query:
-            result_list = run_query(query)
-            context_dict['result_list'] = result_list
-            context_dict['query'] = query
+def track_url(request):
+    
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
             
+            # Retrieves id from the request.
+            page_id = request.GET['page_id']
+            
+            # Checks if there exists a page with a given id.
+            try:
+                page = Page.objects.get(id=page_id)
+            except:
+                page = None
+            
+            if page:
+                page.views += 1
+                page.save()
+                return HttpResponseRedirect(page.url)
+                
+    return HttpResponseRedirect('/rango/')
 
-    return render(request, 'rango/search.html', context_dict)
+    
+@login_required
+def user(request, username):
+    context_dict = {}
+    try:
+        user = User.objects.get(username=username)
+    except:
+        user = None
+    
+    if user:
+        context_dict['user_account'] = user
+        try:
+            user_profile = UserProfile.objects.get(user=user)
+        except:
+            user_profile = None
+        if user_profile:
+            context_dict['website'] = user_profile.website
+            context_dict['picture'] = user_profile.picture
+        
+        context_dict['logged_in'] = False
+        if user == request.user:
+            context_dict['logged_in'] = True
+    return render(request, 'rango/user.html', context_dict)
 
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(data=request.POST)
+        
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except:
+            profile = form.save(commit=False)
+            profile.user = request.user
+        
+        if form.is_valid():
+            if 'website' in request.POST:
+                profile.website = request.POST['website']
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+            profile.save()
+        return HttpResponseRedirect('/rango/user/%s' % request.user.username)
+    else:
+        form = UserProfileForm()
+    return render(request, 'rango/edit_profile.html', {'profile' : form})
+
+
+@login_required
+def user_list(request):
+    dict = {}
+    try:
+        user_list = User.objects.order_by('username')
+        dict['users'] = user_list
+    except:
+        pass
+    return render(request, 'rango/users.html', dict)
+    

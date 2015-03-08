@@ -1,0 +1,19 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Edit your profile{% endblock %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <form role="form" id="user_form" method="post" action="{% url 'edit_profile' %}" enctype="multipart/form-data">
+            <h2 class="form-signing-heading">Edit your profile</h2>
+            <hr>
+            {% csrf_token %}
+            <b>Website:</b> {{ profile.website }}<br/>
+            <b>Picture:</b> {{ profile.picture }}<br/>
+            
+            <button class="btn btn-primary" type="submit" name="submit">Finish</button>
+        </form>
+    {% else %}
+        Access denied.<br/>
+    {% endif %}
+{% endblock %}
