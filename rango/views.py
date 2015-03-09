@@ -151,7 +151,27 @@ def track_url(request):
                 
     return HttpResponseRedirect('/rango/')
 
+
+@login_required
+def password_change(request):
+    dict = {}
+    if request.method == 'POST':
+        try:
+            current_password = request.POST['current_password']
+            new_password = request.POST['new_password']
+            repeat_password = request.POST['repeat_password']
+        except:
+            dict['error_message'] = 'All the fields must be provided.'
+        
+        if authenticate(username=request.user.username, password=current_password) and new_password == repeat_password:
+            request.user.set_password(new_password)
+            request.user.save()
+            dict['success'] = 'Your password has been changed successfully.'
+        else:
+            dict['error_message'] = 'Some of the details you provided were wrong.'
     
+    return render(request, 'rango/password_change.html', dict)
+        
 @login_required
 def user(request, username):
     context_dict = {}
