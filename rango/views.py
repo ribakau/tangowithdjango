@@ -168,6 +168,7 @@ def user(request, username):
             user_profile = None
         if user_profile:
             context_dict['website'] = user_profile.website
+            context_dict['website_name'] = user_profile.website.split('.')[1]
             context_dict['picture'] = user_profile.picture
         
         context_dict['logged_in'] = False
@@ -189,7 +190,11 @@ def edit_profile(request):
         
         if form.is_valid():
             if 'website' in request.POST:
-                profile.website = request.POST['website']
+                url = request.POST['website']
+                if not url.startswith('http://'):
+                    profile.website = 'http://' + url
+                else:
+                    profile.website = url
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
             profile.save()

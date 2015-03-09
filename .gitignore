@@ -1,7 +1,6 @@
-README.md
 db.sqlite3
 *.pyc
 /.idea
 *.py~
 *.html~
-rango/keys.py
+media/profile_images/

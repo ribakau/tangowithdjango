@@ -12,9 +12,9 @@
     {% endif %}
     </h2>
     <hr>
-    <b>Email:</b> {{user_account.email}}<br/>
+    <b>Email: </b>{{user_account.email}}<br/>
     {% if website %}
-        <b>Website:</b> {{website}}<br/>
+        <b>Website: </b><a href="{{website}}">{{website_name}}</a><br/>
     {% endif %}
     {% if picture %}
         <b>Picture:</b><br/>
